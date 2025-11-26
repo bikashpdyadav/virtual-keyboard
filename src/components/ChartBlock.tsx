@@ -13,6 +13,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { useEffect, useState } from "react";
 
 type SeriesConfig = {
   key: string;
@@ -30,6 +31,12 @@ type ChartBlockProps = {
 };
 
 const ChartBlock = ({ title, subtitle, data, type, series, unit }: ChartBlockProps) => {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   return (
     <div className="glass-panel glow-border rounded-3xl p-6">
       <header className="mb-6">
@@ -37,54 +44,60 @@ const ChartBlock = ({ title, subtitle, data, type, series, unit }: ChartBlockPro
         {subtitle && <p className="text-sm text-white/70">{subtitle}</p>}
       </header>
       <div className="h-64">
-        <ResponsiveContainer width="100%" height="100%">
-          {type === "bar" ? (
-            <BarChart data={data} barSize={28}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.08)" />
-              <XAxis dataKey="name" stroke="#cbd5f5" />
-              <YAxis stroke="#cbd5f5" unit={unit} />
-              <Tooltip
-                contentStyle={{
-                  background: "#0a0a16",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  borderRadius: "12px",
-                }}
-                formatter={(value: number) => `${value}${unit ?? ""}`}
-              />
-              <Legend />
-              <ReferenceLine y={0} stroke="#fff" />
-              {series.map((serie) => (
-                <Bar key={serie.key} dataKey={serie.key} name={serie.label} fill={serie.color} radius={6} />
-              ))}
-            </BarChart>
-          ) : (
-            <LineChart data={data}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.08)" />
-              <XAxis dataKey="name" stroke="#cbd5f5" />
-              <YAxis stroke="#cbd5f5" unit={unit} />
-              <Tooltip
-                contentStyle={{
-                  background: "#0a0a16",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  borderRadius: "12px",
-                }}
-                formatter={(value: number) => `${value}${unit ?? ""}`}
-              />
-              <Legend />
-              {series.map((serie) => (
-                <Line
-                  key={serie.key}
-                  type="monotone"
-                  dataKey={serie.key}
-                  name={serie.label}
-                  stroke={serie.color}
-                  strokeWidth={3}
-                  dot={{ stroke: serie.color, strokeWidth: 2 }}
+        {isClient ? (
+          <ResponsiveContainer width="100%" height="100%">
+            {type === "bar" ? (
+              <BarChart data={data} barSize={28}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.08)" />
+                <XAxis dataKey="name" stroke="#cbd5f5" />
+                <YAxis stroke="#cbd5f5" unit={unit} />
+                <Tooltip
+                  contentStyle={{
+                    background: "#0a0a16",
+                    border: "1px solid rgba(255,255,255,0.1)",
+                    borderRadius: "12px",
+                  }}
+                  formatter={(value: number) => `${value}${unit ?? ""}`}
                 />
-              ))}
-            </LineChart>
-          )}
-        </ResponsiveContainer>
+                <Legend />
+                <ReferenceLine y={0} stroke="#fff" />
+                {series.map((serie) => (
+                  <Bar key={serie.key} dataKey={serie.key} name={serie.label} fill={serie.color} radius={6} />
+                ))}
+              </BarChart>
+            ) : (
+              <LineChart data={data}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.08)" />
+                <XAxis dataKey="name" stroke="#cbd5f5" />
+                <YAxis stroke="#cbd5f5" unit={unit} />
+                <Tooltip
+                  contentStyle={{
+                    background: "#0a0a16",
+                    border: "1px solid rgba(255,255,255,0.1)",
+                    borderRadius: "12px",
+                  }}
+                  formatter={(value: number) => `${value}${unit ?? ""}`}
+                />
+                <Legend />
+                {series.map((serie) => (
+                  <Line
+                    key={serie.key}
+                    type="monotone"
+                    dataKey={serie.key}
+                    name={serie.label}
+                    stroke={serie.color}
+                    strokeWidth={3}
+                    dot={{ stroke: serie.color, strokeWidth: 2 }}
+                  />
+                ))}
+              </LineChart>
+            )}
+          </ResponsiveContainer>
+        ) : (
+          <div className="flex h-full items-center justify-center text-xs uppercase tracking-[0.3em] text-white/40">
+            Rendering chart…
+          </div>
+        )}
       </div>
     </div>
   );

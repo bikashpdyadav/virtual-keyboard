@@ -1,0 +1,25 @@
+<svg width="900" height="420" viewBox="0 0 900 420" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="laser" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ff0033" />
+      <stop offset="50%" stop-color="#b44cff" />
+      <stop offset="100%" stop-color="#00eaff" />
+    </linearGradient>
+  </defs>
+  <rect width="900" height="420" rx="28" fill="#050512" stroke="#00eaff" stroke-opacity="0.4" />
+  <path d="M60 210 H840" stroke="url(#laser)" stroke-width="4" stroke-linecap="round" stroke-dasharray="18 12" />
+  <g fill="#d7e5ff" font-family="Orbitron, sans-serif" font-size="20" text-anchor="middle">
+    <text x="90" y="170">Projection</text>
+    <text x="250" y="170">IR Grid</text>
+    <text x="410" y="170">Sensing</text>
+    <text x="570" y="170">Processing</text>
+    <text x="730" y="170">Bluetooth</text>
+  </g>
+  <g fill="#d7e5ff" font-family="Exo, sans-serif" font-size="14" text-anchor="middle">
+    <text x="90" y="250">DOE + Laser stencil</text>
+    <text x="250" y="250">Invisible detection plane</text>
+    <text x="410" y="250">Camera + IR fusion</text>
+    <text x="570" y="250">Firmware mapping</text>
+    <text x="730" y="250">Touchless output</text>
+  </g>
+</svg>

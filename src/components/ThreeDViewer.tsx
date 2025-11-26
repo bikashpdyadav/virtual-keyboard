@@ -5,7 +5,12 @@ import { Html, OrbitControls, useGLTF } from "@react-three/drei";
 import { Suspense } from "react";
 import { motion } from "framer-motion";
 
-const annotations = [
+type Annotation = {
+  label: string;
+  position: [number, number, number];
+};
+
+const annotations: Annotation[] = [
   { label: "Laser Diode", position: [0.2, 0.4, 0.3] },
   { label: "DOE", position: [-0.2, 0.5, 0.1] },
   { label: "IR Grid", position: [0, -0.1, 0.4] },

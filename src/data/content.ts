@@ -84,7 +84,7 @@ export const methodologySections = [
   {
     title: "Processing Unit",
     points: [
-      "Microcontroller decodes XY coordinates, maps ASCII codes, and streams via Bluetooth HID.",
+      "Embedded system decodes XY coordinates, maps ASCII codes, and streams via Bluetooth HID.",
       "Edge firmware calibrates surfaces and logs diagnostics for adaptive tuning.",
     ],
   },
@@ -122,7 +122,7 @@ export const workflowHighlights = [
     description: "Assists with gesture tracking and rejects stray reflections.",
   },
   {
-    title: "Microcontroller",
+    title: "Embedded System",
     description: "Brains of LPVK orchestrating filtering, mapping, and BLE.",
   },
 ];

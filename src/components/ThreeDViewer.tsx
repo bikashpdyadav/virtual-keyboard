@@ -2,8 +2,9 @@
 
 import { Canvas } from "@react-three/fiber";
 import { Html, OrbitControls, useGLTF } from "@react-three/drei";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import { motion } from "framer-motion";
+import * as THREE from "three";
 
 type Annotation = {
   label: string;
@@ -11,16 +12,34 @@ type Annotation = {
 };
 
 const annotations: Annotation[] = [
-  { label: "Laser Diode", position: [0.2, 0.4, 0.3] },
-  { label: "DOE", position: [-0.2, 0.5, 0.1] },
-  { label: "IR Grid", position: [0, -0.1, 0.4] },
-  { label: "Camera Module", position: [-0.3, 0.2, -0.2] },
-  { label: "Microcontroller", position: [0, -0.4, -0.3] },
+  { label: "Camera Module", position: [-0.4, 0.0, -0.3] },
+  { label: "Laser Projection Module", position: [-0.4, 0.0, 0.1] },
+  { label: "IR Grid", position: [0.45, 0.0, -0.1] },
 ];
+
+// const PlaceholderModel = () => {
+//   const { scene } = useGLTF("/model.glb");
+//   return <primitive object={scene} scale={12} />;
+// };
 
 const PlaceholderModel = () => {
   const { scene } = useGLTF("/model.glb");
-  return <primitive object={scene} scale={3} />;
+  
+  useEffect(() => {
+    // Traverse the scene and change all materials
+    scene.traverse((child) => {
+      if (child instanceof THREE.Mesh) {
+        // Create a new material with your desired color
+        child.material = new THREE.MeshStandardMaterial({
+          color: "#e0e0e0", // Change this to any color you want
+          metalness: 0.2,
+          roughness: 0.6,
+        });
+      }
+    });
+  }, [scene]);
+  
+  return <primitive object={scene} scale={12} />;
 };
 
 const Loader = () => (
@@ -34,7 +53,7 @@ const Loader = () => (
 const ThreeDViewer = () => {
   return (
     <div className="relative h-[480px] w-full overflow-hidden rounded-3xl border border-white/10 bg-black/60">
-      <Canvas camera={{ position: [2, 2, 2], fov: 40 }}>
+      <Canvas camera={{ position: [1, 1, 1], fov: 60 }}>
         <color attach="background" args={["#03030f"]} />
         <ambientLight intensity={0.35} />
         <pointLight position={[4, 4, 2]} intensity={1.2} color="#00eaff" />
@@ -55,7 +74,7 @@ const ThreeDViewer = () => {
           ))}
         </Suspense>
       </Canvas>
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/40" />
+      <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-transparent via-transparent to-black/40" />
     </div>
   );
 };
